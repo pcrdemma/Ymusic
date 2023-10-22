@@ -1,7 +1,7 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
-
-let boxImage; 
+let boxImage;
+let playerImage = new Image();
 
 const gridSize = 55;
 const gridWidth = Math.floor(canvas.width / gridSize);
@@ -21,8 +21,22 @@ const boxes = generateRandomBoxPositions(7);
 function loadBoxImage() {
     boxImage = new Image();
     boxImage.src = '/images/jukebox.png';
-    boxImage.onload = startGame;
+    boxImage.onload = function () {
+        // Chargez l'image de l'avatar au chargement de la boîte
+        playerImage.src = avatarImages[avatarIndex];
+        playerImage.onload = startGame;
+    };
 }
+
+// Créez un tableau d'images d'avatar
+const avatarImages = [
+    '/images/character.png',
+    '/images/character2d.png',
+    '/images/monkey-character.png'
+];
+
+// Définissez un index pour suivre l'avatar actuel
+let avatarIndex = 0;
 
 function generateRandomBoxPositions(count) {
     const positions = [];
@@ -49,13 +63,8 @@ function generateRandomBoxPositions(count) {
 }
 
 function drawPlayer() {
-    let playerImage = new Image();
-    playerImage.src = '/images/character.png';
-    playerImage.onload = function () {
-        ctx.drawImage(playerImage, player.x * gridSize, player.y * gridSize, player.width, player.height);
-    };
+    ctx.drawImage(playerImage, player.x * gridSize, player.y * gridSize, player.width, player.height);
 }
-
 function drawBoxes() {
     ctx.font = '15px Audiowide';
     ctx.textAlign = 'center';
@@ -90,7 +99,6 @@ window.addEventListener('keydown', function (event) {
     let prevX = player.x;
     let prevY = player.y;
 
-    // Utilisez les touches définies dans le fichier "control.js"
     switch (event.key) {
         case controls["Forwards"][1]:
             if (player.y > 0) player.y--;
@@ -116,6 +124,16 @@ window.addEventListener('keydown', function (event) {
 
 function startGame() {
     update();
+}
+
+function changeAvatar() {
+    avatarIndex = (avatarIndex + 1) % avatarImages.length;
+    const newImage = avatarImages[avatarIndex];
+    playerImage.src = newImage;
+
+    //ID DE L4AVATAR 
+    const avatarImgElement = document.getElementById('avatarImage');
+    avatarImgElement.src = newImage;
 }
 
 loadBoxImage();

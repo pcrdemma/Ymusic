@@ -7,7 +7,6 @@ var testedLetters = []; // Ajoutez un tableau pour stocker les lettres testées
 
 function playRandomSoundRap() {
     var soundFile = "/audio/douceur/" + currentSongTitle + ".mp3";
-    // console.log(soundFile);
     audioElement.src = soundFile;
     audioElement.play();
 
@@ -15,15 +14,14 @@ function playRandomSoundRap() {
     updateCurrentSongTitleElement();
     updateLifeElement();
 }
-console.log(currentSongTitle)
 
 function compareInput() {
     var userInput = document.getElementById("userInput").value.toLowerCase();
     var matchFound = false;
 
-    // Vérifiez si la lettre a déjà été testée
+
     if (testedLetters.includes(userInput)) {
-        // console.log("Lettre déjà testée : " + userInput);
+
         document.getElementById("userInput").value = "";
         return; // Sortez de la fonction si la lettre a déjà été testée
     }else if(checkword(userInput)){

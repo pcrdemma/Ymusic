@@ -47,13 +47,12 @@ function changeControls(str) {
 
     function handleKeyDown(event) {
         document.addEventListener('keydown', handleKeyDown, true);
-        console.log(event.key);
         controls[str][0] = event.keyCode;
         controls[str][1] = event.key;
         touch.children[0].innerHTML = "Walk " + str + " : " + controls[str][1];
         touch.children[1].innerHTML = "Change";
         document.removeEventListener("keydown", handleKeyDown, true);
-         ////////////////////SAUVEGARDE DES TOUCHES/////////////////
+        // Sauvegarde des touches
         localStorage.setItem('controls', JSON.stringify(controls));
     }
 
